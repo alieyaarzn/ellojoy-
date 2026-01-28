@@ -100,7 +100,6 @@ let index = 0;
 let autoSlide = null;
 
 function getStepPx(){
-  // step = card width + gap
   const card = track?.querySelector(".product-card");
   if (!card) return 278;
   const gap = 18;
@@ -171,8 +170,8 @@ if (track && dots) {
   nextBtn?.addEventListener("click", () => { nextSlide(); restartAuto(); });
   prevBtn?.addEventListener("click", () => { prevSlide(); restartAuto(); });
 
-  // pause on hover
-  const sliderContainer = document.querySelector(".slider-container");
+  // ✅ FIX: selector betul (kau guna .slider, bukan .slider-container)
+  const sliderContainer = document.querySelector(".slider");
   sliderContainer?.addEventListener("mouseenter", () => clearInterval(autoSlide));
   sliderContainer?.addEventListener("mouseleave", () => restartAuto());
 
@@ -184,7 +183,6 @@ if (track && dots) {
     });
   });
 
-  // resize fix
   window.addEventListener("resize", () => updateSlide());
 }
 
@@ -198,7 +196,6 @@ const searchInput = document.getElementById("searchInput");
 let activeFilter = "all";
 let searchQuery = "";
 
-// Flatten products into [{cat, p}]
 function flattenProducts(){
   const all = [];
   Object.keys(products).forEach(cat => {
@@ -219,7 +216,7 @@ function renderGrid(){
   grid.innerHTML = "";
 
   const all = flattenProducts();
-  const q = searchQuery.trim().toLowerCase();
+  const q = (searchQuery || "").trim().toLowerCase();
 
   const filtered = all.filter(x => {
     const filterOk = activeFilter === "all" ? true : x.cat === activeFilter;
@@ -252,12 +249,10 @@ function renderGrid(){
   filtered.forEach(x => {
     const wrap = document.createElement("div");
     wrap.innerHTML = cardHTML(x.p);
-    const el = wrap.firstElementChild;
-    el.dataset.cat = x.cat;
-    el.dataset.name = (x.p[0] || "").toLowerCase();
-    grid.appendChild(el);
+    grid.appendChild(wrap.firstElementChild);
   });
 
+  // reveal items
   grid.querySelectorAll(".product-card").forEach(el => {
     el.classList.add("reveal", "fade-up");
     io.observe(el);
@@ -267,6 +262,7 @@ function renderGrid(){
 if (grid) {
   renderGrid();
 
+  // filters
   filterBtns.forEach(b => {
     b.addEventListener("click", () => {
       document.querySelector(".pill.active")?.classList.remove("active");
@@ -276,6 +272,7 @@ if (grid) {
     });
   });
 
+  // ✅ SEARCH LIVE
   if (searchInput){
     searchInput.addEventListener("input", (e) => {
       searchQuery = e.target.value || "";
@@ -283,4 +280,3 @@ if (grid) {
     });
   }
 }
-
