@@ -189,11 +189,16 @@ if (track && dots) {
 }
 
 /* =========================
-   PRODUCTS PAGE GRID (products.html only)
+   PRODUCTS PAGE GRID + SEARCH (products.html only)
 ========================= */
 const grid = document.getElementById("productGrid");
 const filterBtns = document.querySelectorAll(".pill");
+const searchInput = document.getElementById("searchInput");
 
+let activeFilter = "all";
+let searchQuery = "";
+
+// Flatten products into [{cat, p}]
 function flattenProducts(){
   const all = [];
   Object.keys(products).forEach(cat => {
@@ -202,20 +207,57 @@ function flattenProducts(){
   return all;
 }
 
-function renderGrid(filter){
+function matchesSearch(p, q){
+  if (!q) return true;
+  const name = (p[0] || "").toLowerCase();
+  const desc = (p[1] || "").toLowerCase();
+  return name.includes(q) || desc.includes(q);
+}
+
+function renderGrid(){
   if (!grid) return;
   grid.innerHTML = "";
 
   const all = flattenProducts();
-  const show = filter === "all" ? all : all.filter(x => x.cat === filter);
+  const q = searchQuery.trim().toLowerCase();
 
-  show.forEach(x => {
-    const wrap = document.createElement("div");
-    wrap.innerHTML = cardHTML(x.p);
-    grid.appendChild(wrap.firstElementChild);
+  const filtered = all.filter(x => {
+    const filterOk = activeFilter === "all" ? true : x.cat === activeFilter;
+    const searchOk = matchesSearch(x.p, q);
+    return filterOk && searchOk;
   });
 
-  // reveal items (optional)
+  if (filtered.length === 0){
+    grid.innerHTML = `
+      <div style="
+        grid-column: 1 / -1;
+        background: rgba(255,255,255,.70);
+        border: 1px dashed rgba(94,33,100,.25);
+        border-radius: 18px;
+        padding: 18px;
+        text-align:center;
+        box-shadow: 0 12px 30px rgba(0,0,0,.05);
+      ">
+        <div style="font-weight:700; color: rgba(94,33,100,.95); margin-bottom:6px;">
+          No products found
+        </div>
+        <div class="muted small">
+          Cuba keyword lain (contoh: <b>mango</b>, <b>original</b>, <b>coffee</b>).
+        </div>
+      </div>
+    `;
+    return;
+  }
+
+  filtered.forEach(x => {
+    const wrap = document.createElement("div");
+    wrap.innerHTML = cardHTML(x.p);
+    const el = wrap.firstElementChild;
+    el.dataset.cat = x.cat;
+    el.dataset.name = (x.p[0] || "").toLowerCase();
+    grid.appendChild(el);
+  });
+
   grid.querySelectorAll(".product-card").forEach(el => {
     el.classList.add("reveal", "fade-up");
     io.observe(el);
@@ -223,13 +265,22 @@ function renderGrid(filter){
 }
 
 if (grid) {
-  renderGrid("all");
+  renderGrid();
 
   filterBtns.forEach(b => {
     b.addEventListener("click", () => {
       document.querySelector(".pill.active")?.classList.remove("active");
       b.classList.add("active");
-      renderGrid(b.dataset.filter);
+      activeFilter = b.dataset.filter || "all";
+      renderGrid();
     });
   });
+
+  if (searchInput){
+    searchInput.addEventListener("input", (e) => {
+      searchQuery = e.target.value || "";
+      renderGrid();
+    });
+  }
 }
+
