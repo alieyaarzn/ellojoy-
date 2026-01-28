@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Products | Ellojoy</title>
+  <meta name="description" content="Explore Ellojoy products — flavours, Fury edition, coffee & chocolate series, and Aromedix." />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html" aria-label="Ellojoy Home">
+        <img src="img/logo ellojoy.png" alt="Ellojoy Logo" />
+      </a>
+
+      <button class="nav-toggle" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+
+      <nav class="nav-menu" aria-label="Primary">
+        <a class="nav-link" href="index.html">HOME</a>
+        <a class="nav-link" href="about.html">ABOUT US</a>
+        <a class="nav-link" href="management-team.html">MANAGEMENT TEAM</a>
+        <a class="nav-link active" href="products.html">PRODUCTS</a>
+        <a class="nav-link" href="faq.html">FAQ</a>
+        <a class="nav-link" href="contact.html">CONTACT</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="page-hero">
+    <div class="container reveal fade-up">
+      <span class="kicker light">Products</span>
+      <h1>Our Products</h1>
+      <p>Browse our full lineup — built around usability, taste, and daily lifestyle.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+
+      <div class="product-toolbar reveal fade-up">
+        <div>
+          <h2 class="h3">Categories</h2>
+          <p class="tiny muted">Filter + search untuk mudahkan customer.</p>
+        </div>
+
+        <div class="toolbar-right">
+          <div class="pill-row">
+            <button class="pill active" data-filter="all">All</button>
+            <button class="pill" data-filter="flavour">Zero Gula Flavour</button>
+            <button class="pill" data-filter="monkfruit"> Zero Gula Monkfruit</button>
+            <button class="pill" data-filter="sucralose">Zero Gula Sucralose</button>
+            <button class="pill" data-filter="fury">Zero Gula (Edisi Fury)</button>
+            <button class="pill" data-filter="coffee">Coffee & Chocolate Drink (Edisi Fury)</button>
+            <button class="pill" data-filter="aromedix">Minyak Aromedix</button>
+          </div>
+
+          <div class="searchbox">
+            <input id="searchInput" type="text" placeholder="Search product..." />
+          </div>
+        </div>
+      </div>
+
+      <div class="product-grid" id="productGrid"></div>
+
+      <div class="center reveal fade-up" style="margin-top:20px;">
+        <a class="btn btn-ghost" href="contact.html">Need bulk / collaboration? Contact us</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div class="footer-col">
+        <img class="footer-logo" src="img/logo ellojoy.png" alt="Ellojoy Logo">
+        <p class="tiny muted">
+          Ellojoy International Sdn Bhd — wellness-focused products for modern lifestyle.
+        </p>
+      </div>
+
+      <div class="footer-col">
+        <div class="footer-title">Company</div>
+        <a href="about.html">About Us</a>
+        <a href="management-team.html">Management Team</a>
+        <a href="products.html">Products</a>
+      </div>
+
+      <div class="footer-col">
+        <div class="footer-title">Support</div>
+        <a href="faq.html">FAQ</a>
+        <a href="contact.html">Contact</a>
+      </div>
+
+      <div class="footer-col">
+        <div class="footer-title">Contact</div>
+        <div class="tiny muted">
+          Email: <a href="mailto:ellojoy.official@gmail.com">ellojoy.official@gmail.com</a><br/>
+          Shah Alam, Selangor
+        </div>
+      </div>
+    </div>
+
+    <div class="container footer-bottom">
+      <p>© <span id="year"></span> Ellojoy. All Rights Reserved.</p>
+      <p class="tiny muted">Disclaimer: Replace with your official legal text if needed.</p>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
